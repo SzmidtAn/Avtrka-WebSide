@@ -1,0 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+    <div class="container bottom-auto" >
+        <p class="navbar-text navPadding">Avntrka - developed by Aneta Szmidt</p>
+    </div>

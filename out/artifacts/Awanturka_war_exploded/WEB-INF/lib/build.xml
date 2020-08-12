@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="dist" name="multipartrequest">
+
+	<property file="build.properties" />
+
+	<property name="src.test" location="test" />
+	<property name="src.build" location="src" />
+	<property name="build" location="build" />
+
+	<path id="classpath">
+		<pathelement location="lib/servlet.jar" />
+		<pathelement location="lib/junit.jar" />
+	</path>
+
+	<path id="classpath.test">
+		<path refid="classpath" />
+		<pathelement location="${build}" />
+	</path>
+
+	<target name="build" depends="clean, javadoc, war" />
+
+	<target name="init">
+		<mkdir dir="build" />
+		<mkdir dir="javadocs" />
+	</target>
+
+	<target name="clean">
+		<delete file="multipartrequest.jar" />
+		<delete file="FileUploadWebApp.war" />
+		<delete file="javadocs.zip" />
+		<delete file="WebContent/WEB-INF/lib/multipartrequest.jar" />
+		<delete dir="build" />
+		<delete dir="javadocs" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac debug="true" destdir="build" source="1.1" target="1.3">
+			<src path="${src.test}" />
+			<src path="${src.build}" />
+			<classpath refid="classpath" />
+		</javac>
+		
+		<mkdir dir="${build}/dumps" />
+		<copy todir="${build}/dumps">
+		    <fileset dir="${src.test}/dumps">
+		      <include name="**/*.dump"/>
+		    </fileset>
+		</copy>
+	</target>
+
+	<target name="test" depends="compile">
+		<junit>
+			<classpath refid="classpath.test" />
+			<formatter type="plain" usefile="false" />
+			
+			<batchtest>
+				<fileset dir="${src.test}">
+					<include name="**/*Test*.java" />
+					<exclude name="**/Abstract*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="javadoc">
+		<javadoc access="public" author="true" classpath="lib/servlet.jar" destdir="javadocs" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="net.iamvegan.multipartrequest" source="1.3" sourcepath="src" splitindex="true" use="true" version="true" />
+		
+		<zip destfile="javadocs.zip" duplicate="preserve">
+					<zipfileset dir="javadocs" prefix="" />
+		</zip>
+
+		<delete dir="javadocs" />
+	</target>
+
+	<target name="jar" depends="compile">
+		<delete file="multipartrequest.jar" />
+		
+		<jar destfile="multipartrequest.jar" duplicate="preserve">
+			<manifest>
+				<attribute name="Jar-Release-Version" value="${jar.release.version}" />
+				<attribute name="Created-By" value="Jason Pell" />
+				<attribute name="Manifest-Version" value="1.0" />
+			</manifest>
+
+			<zipfileset dir="build" prefix="" />
+		</jar>
+
+		<copy file="multipartrequest.jar" todir="WebContent/WEB-INF/lib/" />
+	</target>
+
+	<target name="war" depends="jar">
+		<delete file="FileUploadWebApp.war" />
+		
+		<jar destfile="FileUploadWebApp.war" duplicate="preserve">
+			<zipfileset dir="WebContent" prefix="" />
+		</jar>
+	</target>
+	
+	<target name="dist" depends="build">
+		<delete file="MultipartRequest-${jar.release.version}.zip" />
+		
+		<zip destfile="MultipartRequest-${jar.release.version}.zip" duplicate="preserve">
+			<fileset dir="." casesensitive="yes">
+				<include name="FileUploadWebApp.war"/>
+				<include name="multipartrequest.jar"/>
+				<include name="javadocs.zip"/>
+				<include name="lib/"/>
+				<include name="src/"/>
+				<include name="test/"/>
+				<include name="WebContent/"/>
+				<include name="build.xml"/>
+				<include name="build.properties"/>
+				<include name="ChangeLog"/>
+				<include name="LICENSE"/>
+				<include name="README"/>
+			</fileset>
+		</zip>
+		
+		<antcall target="clean" />
+
+	</target>
+</project>

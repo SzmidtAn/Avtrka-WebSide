@@ -1,0 +1,13 @@
+Servlet MultipartRequest 2.0 README
+-----------------------------------
+
+This library uses some code from Apache Commons file upload.  Instead of creating a 
+dependency to the file upload lib, the required code has been copied.  The following 
+classes have been copied from Apache File Uploads library and in some cases modified
+slightly.
+
+src/net/iamvegan/multipartrequest/ProgressListener.java
+src/org/apache/commons/fileupload/ParameterParser.java
+src/org/apache/commons/fileupload/util/Streams.java
+test/org/apache/commons/fileupload/MockHttpServletRequest.java
+

@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+    <TITLE>HttpServerMultipartRequest Tester</TITLE>
+</HEAD>
+<BODY>
+<H1>HttpServerMultipartRequest - Servlet Test Form</H1>
+
+<TABLE>
+<FORM ACTION="testupload" METHOD="POST">
+<TR><TD>Name:</TD><TD><INPUT TYPE="TEXT" NAME="name" SIZE=35 value="Jason"></TD></TR>
+<TR><TD>Surname:</TD><TD><INPUT TYPE="TEXT" NAME="surname" SIZE=35 value="Pell"></TD></TR>
+<br>
+<TR><TD>Name:</TD><TD><INPUT TYPE="TEXT" NAME="name" SIZE=35 value="Jason"></TD></TR>
+<TR><TD>Surname:</TD><TD><INPUT TYPE="TEXT" NAME="surname" SIZE=35 value="Pell"></TD></TR>
+
+
+<TR><TD colspan=2><textarea name=stuff cols=60 rows=10>
+Are you going to upload a file.
+</textarea></TR>
+
+<TR><TD><INPUT onclick="this.form.action='testupload'; return true;" TYPE="SUBMIT" VALUE="Upload!"></TD>
+<TD><INPUT onclick="this.form.action='EchoUploadDataServlet'; return true;" TYPE="SUBMIT" VALUE="Dump!"></TD></TR>
+
+</FORM>
+</TABLE>
+
+<br>
+<br>
+<br>
+
+<hr>
+<ADDRESS>
+<a href="http://multpartrequest.sourceforge.net/">http://multpartrequest.sourceforge.net/</a>
+</ADDRESS>
+</BODY>
+</HTML>
